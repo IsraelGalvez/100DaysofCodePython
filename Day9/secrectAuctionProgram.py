@@ -1,20 +1,29 @@
+import art
+import os
+
 people = {}
+clearConsole = lambda: os.system('cls' if os.name in ('nt', 'dos') else 'clear')
 
 def secrectAuction():
     run = True
+    print(art.logo)
     while run:
         name = input("What is your name?: ")
         bid = float(input("What's your bid?: $"))
         
         people[name] = bid
-        another_person = input("Are there any other bidders? Type 'yes or 'no'.")
-        if another_person == "no":
+        another_person = input("Are there any other bidders? Type 'yes or 'no'.").lower()
+        if another_person != "yes":
             run = False
-    winner = winner(people)
+        clearConsole()
+    winner = winnerPerson(people)
     bid = people[winner]
-    print("The winner is James with a bid of $" + bid)
+    if bid > 0:
+        print(f"The winner is {winner} with a bid of ${bid}")
+    else:
+        print("No one win")
             
-def winner(people):
+def winnerPerson(people):
     num = 1
     winner = ""
     for person in people:
@@ -24,4 +33,6 @@ def winner(people):
         elif people[person] > people[winner]:
             winner = person
     return winner
+
+secrectAuction()
         
